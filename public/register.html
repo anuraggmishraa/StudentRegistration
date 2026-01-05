@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Register</h2>
+
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <select id="course" required>
+      <option value="">Select Course</option>
+    </select>
+
+    <button onclick="register()">Register</button>
+
+    <p>
+      Already registered?
+      <a href="login.html">Login here</a>
+    </p>
+  </div>
+
+  <script src="js/register.js"></script>
+
+  <script>
+    fetch("/courses")
+      .then(res => res.json())
+      .then(data => {
+        const select = document.getElementById("course")
+        data.forEach(c => {
+          select.innerHTML += `<option value="${c.name}">${c.name}</option>`
+        })
+      })
+  </script>
+
+</body>
+</html>
