@@ -14,7 +14,7 @@ app.use(express.static("public"));
 /* ===================== PORT ===================== */
 const PORT = process.env.PORT || 3000;
 
-/* ===================== DB CONNECT ===================== */
+/* ===================== DATABASE ===================== */
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
@@ -29,7 +29,7 @@ const Course = require("./models/course");
 
 /* ===================== ROUTES ===================== */
 
-// Default route
+// Home → Login page
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/login.html");
 });
@@ -125,10 +125,11 @@ app.get("/courses", async (req, res) => {
   }
 });
 
-/* ---------- SEED COURSES (RUN ONCE) ---------- */
+/* ---------- SEED COURSES (RUN ONLY ONCE) ---------- */
 app.get("/seed-courses", async (req, res) => {
   try {
     const count = await Course.countDocuments();
+
     if (count > 0) {
       return res.send("Courses already exist");
     }
