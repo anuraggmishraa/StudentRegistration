@@ -125,6 +125,17 @@ app.get("/courses", async (req, res) => {
   }
 });
 
+/* ---------- GET USERS (FOR COURSES PAGE) ---------- */
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find({}, { password: 0 });
+    res.json(users);
+  } catch (err) {
+    console.error("Users error:", err);
+    res.status(500).json([]);
+  }
+});
+
 /* ---------- SEED COURSES (RUN ONLY ONCE) ---------- */
 app.get("/seed-courses", async (req, res) => {
   try {
